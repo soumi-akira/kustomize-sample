@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: APP_NAME
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/proxyCPU: 125m
+        sidecar.istio.io/proxyMemory: 128Mi
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      containers:
+        - name: APP_NAME
+          resources:
+            requests:
+              cpu: 500m
+              ephemeral-storage: 100Mi
+              memory: 512Mi

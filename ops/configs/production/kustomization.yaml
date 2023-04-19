@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../base
+namespace: $${{ デプロイ先の名前空間 }}
+resources:
+  - custom/pdb.yaml
+patchesStrategicMerge:
+  - custom/deployment.yaml
+  - custom/http-route.yaml
+configMapGenerator:
+  - name: env-config
+    literals:
+      - NODE_ENV=production
+    envs:
+      - .env

@@ -1,0 +1,30 @@
+- source:
+    kind: Service
+    name: APP_NAME
+    fieldPath: metadata.labels.app
+  targets:
+    # 基本設定用
+    - select:
+        kind: Service
+        name: APP_NAME
+      fieldPaths:
+        - metadata.labels.service
+        - metadata.name
+    - select:
+        kind: Deployment
+        name: APP_NAME
+      fieldPaths:
+        - spec.template.spec.containers.[name=APP_NAME].name
+        - metadata.name
+    - select:
+        kind: HTTPRoute
+        name: APP_NAME
+      fieldPaths:
+        - spec.rules.*.backendRefs.[name=APP_NAME].name
+        - metadata.name
+    # production向け
+    - select:
+        kind: PodDisruptionBudget
+        name: APP_NAME
+      fieldPaths:
+        - metadata.name

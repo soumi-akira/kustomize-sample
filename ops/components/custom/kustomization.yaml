@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+replacements:
+  - path: replacement.yaml
+images:
+  - name: registry
+    newName: $${{ Dockerイメージをpushするリポジトリ }}
+labels:
+  - includeSelectors: true
+    pairs:
+      app: $${{ 置き替えられるアプリ名 }}

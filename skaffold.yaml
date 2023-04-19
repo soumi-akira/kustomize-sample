@@ -1,0 +1,19 @@
+apiVersion: skaffold/v4beta1
+kind: Config
+metadata:
+  name: $${{ アプリ名 }}
+build:
+  tagPolicy:
+    dateTime: {}
+  artifacts:
+    - image: $${{ Dockerイメージをpushするリポジトリ }}
+      context: .
+  local:
+    useBuildkit: true
+
+profiles:
+  - name: production
+    manifests:
+      kustomize:
+        paths:
+          - ops/production
